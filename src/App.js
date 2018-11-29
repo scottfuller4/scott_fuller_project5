@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Effect from './Effect';
+import Strain from './Strain';
 
 class App extends Component {
   constructor(){
@@ -13,10 +14,6 @@ class App extends Component {
       matchedStrains: []
     }
   }
-
-
-
-
 
   //on submit of the form
   //stop the default form behaviour
@@ -35,6 +32,10 @@ class App extends Component {
     })
 
     console.log(matchedStrains);
+
+    this.setState({
+      matchedStrains: matchedStrains
+    })
   }
 
   //store the values of the checked variables into an array
@@ -71,6 +72,7 @@ class App extends Component {
                 this.state.positiveEffects.map(positiveEffect => {
                   return(
                     <Effect 
+                      key={positiveEffect.effect}
                       effectName={positiveEffect.effect}
                       handleChange={this.handleChange} 
                     />
@@ -82,6 +84,18 @@ class App extends Component {
           </section>
           <section>
             <h2>Matched strains</h2>
+            {
+              this.state.matchedStrains.map(matchedStrain => {
+                return(
+                  <Strain 
+                    key={matchedStrain.id}
+                    name={matchedStrain.name}
+                    race={matchedStrain.race}
+                    effects={matchedStrain.positiveEffects}
+                  />
+                )
+              })
+            }
           </section>
         </main>
       </div>
