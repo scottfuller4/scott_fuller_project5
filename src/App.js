@@ -9,7 +9,8 @@ class App extends Component {
     this.state = {
       strains: [],
       positiveEffects: [],
-      selectedEffects: []
+      selectedEffects: [],
+      matchedStrains: []
     }
   }
 
@@ -22,16 +23,66 @@ class App extends Component {
   //using the includes() Array method, compare the stored values with the this.state.strains array
   //print the matched strains to the page
   //clear the values of the form
-
-
   handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (this.state.strains[0].positiveEffects.includes("Giggly")) {
-    //   console.log("yassss");
-    // } else {
-    //   console.log("nope");
-    // }
+    const matchedStrains = Array.from(this.state.strains);
+    const selectedEffectsCopy = Array.from(this.state.selectedEffects);
+
+    console.log(selectedEffectsCopy);
+
+    // const filteredStrains = matchedStrains.filter(strain => {
+    //   if (strain.positiveEffects.includes(selectedEffectsCopy)) {
+    //     return strain;
+    //   }
+    // })
+
+    // const filteredStrains = matchedStrains.filter(strain => {
+    //   if (strain.positiveEffects.forEach(effect => {
+    //     this.state.selectedEffects.includes(effect)
+    //   })
+  
+  // includes(this.state.selectedEffects[0] && this.state.selectedEffects[1])) {
+  // return strain;
+    
+    // const filteredStrains = matchedStrains.filter(strain => {
+    //   if (strain.positiveEffects.includes(this.state.selectedEffects[0]) && strain.positiveEffects.includes(this.state.selectedEffects[1]) && strain.positiveEffects.includes(this.state.selectedEffects[2])) {
+    //     return strain;
+    //   }
+    // })
+
+    const filteredStrains = matchedStrains.filter(strain => {
+      if (strain.positiveEffects.includes(this.state.selectedEffects[this.state.selectedEffects.length])) {
+        return strain;
+      }
+    })
+
+      // this.state.selectedEffects.forEach(effect => {
+      //   return (strain.positive)
+      //   if (strain.positiveEffects.includes(effect)) {
+      //     console.log(strain);
+      //   }
+      // })
+
+    // const filteredStrains = matchedStrains.filter(strain => {
+    //   this.state.selectedEffects.forEach(effect => {
+    //     if(strain.positiveEffects.includes(effect)) {}
+    //   })
+    //   if (strain.positiveEffects.includes(this.state.selectedEffects)){
+    //     console.log(strain);
+    //   }
+    // })
+
+
+
+
+    // })
+
+    // const strainNames = filteredStrains.map(s => {
+    //   return s.name;
+    // })
+
+    console.log(filteredStrains);
   }
 
   //store the values of the checked variables into an array
