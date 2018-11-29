@@ -27,11 +27,11 @@ class App extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (this.state.strains[0].positiveEffects.includes("Giggly")) {
-      console.log("yassss");
-    } else {
-      console.log("nope");
-    }
+    // if (this.state.strains[0].positiveEffects.includes("Giggly")) {
+    //   console.log("yassss");
+    // } else {
+    //   console.log("nope");
+    // }
   }
 
   //store the values of the checked variables into an array
@@ -43,12 +43,11 @@ class App extends Component {
 
     if (e.target.checked) {
       userSelectedEffects.push(e.target.value);
-    } 
+    }  else if (e.target) {
+      const indexOfUnselect = userSelectedEffects.indexOf(e.target.value);
+      userSelectedEffects.splice(indexOfUnselect, 1);
+    }
     
-    // if (e.target(!checked)) {
-    //   console.log('you unchecked a box');
-    // }
-
     console.log(userSelectedEffects);
 
     this.setState({
