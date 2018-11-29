@@ -8,8 +8,52 @@ class App extends Component {
     super();
     this.state = {
       strains: [],
-      positiveEffects: []
+      positiveEffects: [],
+      selectedEffects: []
     }
+  }
+
+
+
+
+
+  //on submit of the form
+  //stop the default form behaviour
+  //using the includes() Array method, compare the stored values with the this.state.strains array
+  //print the matched strains to the page
+  //clear the values of the form
+
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (this.state.strains[0].positiveEffects.includes("Giggly")) {
+      console.log("yassss");
+    } else {
+      console.log("nope");
+    }
+  }
+
+  //store the values of the checked variables into an array
+  //if the variable is unchecked, remove it from the array
+  handleChange = (e) => {
+    console.log(e.target.value)
+
+    const userSelectedEffects = Array.from(this.state.selectedEffects);
+
+    if (e.target.checked) {
+      userSelectedEffects.push(e.target.value);
+    } 
+    
+    // if (e.target(!checked)) {
+    //   console.log('you unchecked a box');
+    // }
+
+    console.log(userSelectedEffects);
+
+    this.setState({
+      selectedEffects: userSelectedEffects
+    })
   }
   
   render() {
@@ -20,16 +64,22 @@ class App extends Component {
         </header>
         <main>
           <section>
-            <form action="">
+            <form onSubmit={this.handleSubmit} action="">
               {
                 this.state.positiveEffects.map(positiveEffect => {
                   return(
-                    <Effect effectName={positiveEffect.effect} />
+                    <Effect 
+                      effectName={positiveEffect.effect}
+                      handleChange={this.handleChange} 
+                    />
                   )
                 })
               }
               <input type="submit" value="Lets get high" />
             </form>
+          </section>
+          <section>
+            <h2>Matched strains</h2>
           </section>
         </main>
       </div>
