@@ -3,7 +3,10 @@ import './App.css';
 import axios from 'axios';
 import Effect from './Effect';
 import Strain from './Strain';
+import firebase from './firebase';
 // import SweetAlert from 'sweetalert-react';
+
+const dbRef = firebase.database().ref();
 
 class App extends Component {
   constructor(){
@@ -12,7 +15,9 @@ class App extends Component {
       strains: [],
       positiveEffects: [],
       selectedEffects: [],
-      matchedStrains: []
+      matchedStrains: [],
+      strainList: {},
+      showSection: false
     }
   }
 
@@ -65,7 +70,30 @@ class App extends Component {
       selectedEffects: userSelectedEffects
     })
   }
+
+
+
+// Pushing strains to firebase
+  handleClick = (id, name, race, positiveEffects) => {
+    const favStrain = {
+      id: id,
+      name: name,
+      race: race,
+      effects: positiveEffects
+    }
+    dbRef.push(favStrain);
+  }
   
+  onClick = () => {
+    let show = this.state.showSection;
+
+    show = true;
+
+    this.setState({
+      showSection: show
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -75,41 +103,68 @@ class App extends Component {
           </div>
         </header>
         <main>
-          <div className="wrapper">
-            <section>
-              <form onSubmit={this.handleSubmit} action="">
-                <div className="formContainer">
-                {
-                  this.state.positiveEffects.map(positiveEffect => {
-                    return(
-                      <Effect 
-                        key={positiveEffect.effect}
-                        effectName={positiveEffect.effect}
-                        handleChange={this.handleChange} 
-                      />
-                    )
-                  })
-                }
+            <section className="effectSelector">
+              <div className="wrapper">
+                <form onSubmit={this.handleSubmit} action="">
+                  <div className="formContainer">
+                  {
+                    this.state.positiveEffects.map(positiveEffect => {
+                      return(
+                        <Effect 
+                          key={positiveEffect.effect}
+                          effectName={positiveEffect.effect}
+                          handleChange={this.handleChange} 
+                        />
+                      )
+                    })
+                  }
+                  </div>
+                  <input type="submit" value="Lets get high" onClick={this.onClick} />
+                </form>
+              </div>
+            </section>
+
+            <section className={this.state.showSection ? 'matchedStrains' : 'hidden'}>
+              <div className="wrapper">
+                <h2>Matched strains</h2>
+                <div className="strainContainer">
+                  {
+                    this.state.matchedStrains.map(matchedStrain => {
+                      return(
+                        <Strain 
+                          key={matchedStrain.id}
+                          id={matchedStrain.id}
+                          name={matchedStrain.name}
+                          race={matchedStrain.race}
+                          effects={matchedStrain.positiveEffects}
+                          handleClick={this.handleClick}
+                        />
+                      )
+                    })
+                  }
                 </div>
-                <input type="submit" value="Lets get high" />
-              </form>
+              </div>
             </section>
-            <section>
-              {/* <h2>Matched strains</h2> */}
-              {
-                this.state.matchedStrains.map(matchedStrain => {
-                  return(
-                    <Strain 
-                      key={matchedStrain.id}
-                      name={matchedStrain.name}
-                      race={matchedStrain.race}
-                      effects={matchedStrain.positiveEffects}
-                    />
-                  )
-                })
-              }
+
+            <section className={this.state.showSection ? 'favStrains' : 'hidden'}>
+              <div className="wrapper">
+                  <h2>Favourite strains</h2>
+                  {
+                    Object.entries(this.state.strainList).map((strain) => {
+                      console.log(strain[1].name);
+                      // return (
+                      //   <div>
+                      //     <h3></h3>
+                      //     <p></p>
+                      //     <ul>
+
+                      //     </ul>
+                      //   </div>
+                      // )
+                    })
+                  }
+              </div>
             </section>
-          </div>
         </main>
         <footer>
           <p>© 2018 Scott Fuller</p>
@@ -159,6 +214,12 @@ class App extends Component {
         positiveEffects: positiveEffects
       })
     })
+
+    dbRef.on('value', (snapshot) => {
+      this.setState({
+        strainList: snapshot.val()
+      });
+    });
   }
 }
 

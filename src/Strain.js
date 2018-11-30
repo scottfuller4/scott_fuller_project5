@@ -2,7 +2,7 @@ import React from 'react';
 
 const Strain = (props) => {
     return(
-        <div className="matchedStrain">
+        <div className="strain">
             <h3>{props.name}</h3>
             <p>Race: {props.race}</p>
             <ul>
@@ -14,6 +14,7 @@ const Strain = (props) => {
                     })
                 }              
             </ul>
+            <button onClick={ () => {props.handleClick(props.id, props.name, props.race, props.effects)}}>Add to favourites</button>
         </div>
     )
 }

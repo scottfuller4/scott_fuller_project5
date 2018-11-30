@@ -13,7 +13,6 @@ html {
 }
 
 body {
-  background: #DAA520;
   font-size: 1.6rem;
   
 }
@@ -26,16 +25,19 @@ body {
 }
 
 header {
-  height: 80vh;
+  height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
   /* border: 2px solid red; */
-  background-image: url(./assets/header.jpg);
+  background-image: linear-gradient(180deg, transparent 0%, #000 130%), url(./assets/header.jpg);
   background-size: cover;
   color: white;
-  text-transform: uppercase;
+}
+
+h1, h2, h3 {
   font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
 }
 
 h1 {
@@ -49,11 +51,16 @@ h2 {
 
 /* Form/effect styles */
 
+.effectSelector {
+    background: #DAA520;
+    /* margin: 100px 0 50px 0; */
+}
+
 .formContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 100px 0 50px 0;
+  padding: 100px 0 50px 0;
 }
 
 .effectContainer {
@@ -78,9 +85,9 @@ h2 {
 }
 
 /* CHANGE LATER TO MAKE ACCESSIBLE */
-.effectContainer input {
+/* .effectContainer input {
   display: none;
-}
+} */
 
 input[type=submit] {
   margin: 50px 0 100px 0;
@@ -99,19 +106,40 @@ input[type=submit]:hover {
 
 /* matched strains styles */
 
-.matchedStrain {
-  border: 2px solid black;
-  background: green;
-  color: white;
+.matchedStrains {
+  background: white;
+}
+
+.strainContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 100px auto 50px auto;
+}
+
+.strain {
+  /* background: green; */
+  /* color: white; */
+  width: calc(50% - 40px);
+  border: 2px solid #DAA520;
+  margin: 20px;
+}
+
+.strain ul {
+  padding: 0;
 }
 
 /* Footer styles */
 
 footer {
-  background: white;
+  background: #DAA520;
+  color: white;
 }
 
 footer p {
   margin: 0;
   padding: 15px 0;
+}
+
+.hidden {
+  display: none;
 }
