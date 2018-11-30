@@ -70,40 +70,46 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h1>Marijuana strain recommendation</h1>
+          <div className="wrapper">
+            <h1>Marijuana strain recommendation</h1>
+          </div>
         </header>
         <main>
-          <section>
-            <form onSubmit={this.handleSubmit} action="">
+          <div className="wrapper">
+            <section>
+              <form onSubmit={this.handleSubmit} action="">
+                <div className="formContainer">
+                {
+                  this.state.positiveEffects.map(positiveEffect => {
+                    return(
+                      <Effect 
+                        key={positiveEffect.effect}
+                        effectName={positiveEffect.effect}
+                        handleChange={this.handleChange} 
+                      />
+                    )
+                  })
+                }
+                </div>
+                <input type="submit" value="Lets get high" />
+              </form>
+            </section>
+            <section>
+              {/* <h2>Matched strains</h2> */}
               {
-                this.state.positiveEffects.map(positiveEffect => {
+                this.state.matchedStrains.map(matchedStrain => {
                   return(
-                    <Effect 
-                      key={positiveEffect.effect}
-                      effectName={positiveEffect.effect}
-                      handleChange={this.handleChange} 
+                    <Strain 
+                      key={matchedStrain.id}
+                      name={matchedStrain.name}
+                      race={matchedStrain.race}
+                      effects={matchedStrain.positiveEffects}
                     />
                   )
                 })
               }
-              <input type="submit" value="Lets get high" />
-            </form>
-          </section>
-          <section>
-            <h2>Matched strains</h2>
-            {
-              this.state.matchedStrains.map(matchedStrain => {
-                return(
-                  <Strain 
-                    key={matchedStrain.id}
-                    name={matchedStrain.name}
-                    race={matchedStrain.race}
-                    effects={matchedStrain.positiveEffects}
-                  />
-                )
-              })
-            }
-          </section>
+            </section>
+          </div>
         </main>
         <footer>
           <p>© 2018 Scott Fuller</p>
