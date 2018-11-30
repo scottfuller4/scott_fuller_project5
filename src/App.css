@@ -25,7 +25,7 @@ body {
 }
 
 header {
-  height: 90vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,6 +48,18 @@ h1 {
 h2 {
   margin: 0;
 }
+
+ul {
+  padding: 0;
+}
+
+/* About styles */
+.description {
+  margin: 100px 0;
+  text-align: left;
+}
+
+
 
 /* Form/effect styles */
 
@@ -124,9 +136,7 @@ input[type=submit]:hover {
   margin: 20px;
 }
 
-.strain ul {
-  padding: 0;
-}
+
 
 /* Footer styles */
 

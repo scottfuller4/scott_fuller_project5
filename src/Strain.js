@@ -9,7 +9,7 @@ const Strain = (props) => {
                 {
                     props.effects.map((effect) => {
                         return(
-                            <li>{effect}</li>
+                            <li key={effect}>{effect}</li>
                         )
                     })
                 }              

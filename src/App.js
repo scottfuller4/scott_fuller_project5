@@ -37,10 +37,7 @@ class App extends Component {
       })
     })
 
-    console.log(matchedStrains);
-
     if (matchedStrains.length === 0){
-      console.log("no match");
       alert("No strains match your search parameter. Update your selection and try again.")
     }
 
@@ -53,7 +50,6 @@ class App extends Component {
   //store the values of the checked variables into an array
   //if the variable is unchecked, remove it from the array
   handleChange = (e) => {
-    console.log(e.target.value)
 
     const userSelectedEffects = Array.from(this.state.selectedEffects);
 
@@ -63,8 +59,7 @@ class App extends Component {
       const indexOfUnselect = userSelectedEffects.indexOf(e.target.value);
       userSelectedEffects.splice(indexOfUnselect, 1);
     }
-    
-    console.log(userSelectedEffects);
+  
 
     this.setState({
       selectedEffects: userSelectedEffects
@@ -94,6 +89,19 @@ class App extends Component {
     })
   }
 
+  deleteStrain = (e) => {
+    const firebaseKey = e.target.id;
+    const strainRef = firebase.database().ref(`${firebaseKey}`);
+    strainRef.remove();
+  }
+
+  shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
   render() {
     return (
       <div className="App">
@@ -103,6 +111,12 @@ class App extends Component {
           </div>
         </header>
         <main>
+            <section className="description">
+              <div className="wrapper">
+                <h2>About</h2>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum dolorum numquam autem. Reiciendis quod, sequi numquam quibusdam rerum tenetur alias quas nulla, quidem illo incidunt voluptates voluptatibus nostrum soluta maiores laborum ut dolore consequatur molestiae magnam. Eveniet sit, rerum odio assumenda facilis harum fuga earum molestias voluptates maxime consectetur ea ratione doloribus provident nostrum tempore quam aut voluptas cumque deserunt adipisci illo illum. Eveniet, minima facilis? Placeat non expedita voluptatibus obcaecati maiores. Ducimus illum consequuntur repellendus voluptates eos. Inventore culpa dignissimos quae sed atque est suscipit deserunt iure dolores sapiente sint unde reiciendis, dicta impedit, dolorem porro architecto! Id, animi?</p>
+              </div>
+            </section>
             <section className="effectSelector">
               <div className="wrapper">
                 <form onSubmit={this.handleSubmit} action="">
@@ -130,16 +144,17 @@ class App extends Component {
                 <div className="strainContainer">
                   {
                     this.state.matchedStrains.map(matchedStrain => {
-                      return(
-                        <Strain 
-                          key={matchedStrain.id}
-                          id={matchedStrain.id}
-                          name={matchedStrain.name}
-                          race={matchedStrain.race}
-                          effects={matchedStrain.positiveEffects}
-                          handleClick={this.handleClick}
-                        />
-                      )
+                        return(
+                          <Strain 
+                            key={matchedStrain.id}
+                            id={matchedStrain.id}
+                            name={matchedStrain.name}
+                            race={matchedStrain.race}
+                            effects={matchedStrain.positiveEffects}
+                            handleClick={this.handleClick}
+                            shuffleArray={this.shuffleArray}
+                          />
+                        )
                     })
                   }
                 </div>
@@ -151,16 +166,22 @@ class App extends Component {
                   <h2>Favourite strains</h2>
                   {
                     Object.entries(this.state.strainList).map((strain) => {
-                      console.log(strain[1].name);
-                      // return (
-                      //   <div>
-                      //     <h3></h3>
-                      //     <p></p>
-                      //     <ul>
-
-                      //     </ul>
-                      //   </div>
-                      // )
+                      return (
+                        <div className="strain" key={strain[0]}>
+                          <h3>{strain[1].name}</h3>
+                          <p>Race: {strain[1].race}</p>
+                          <ul>
+                            {
+                              strain[1].effects.map((effect) => {
+                                return(
+                                  <li key={effect}>{effect}</li>
+                                )
+                              })
+                            }
+                          </ul>
+                          <button onClick={this.deleteStrain} id={strain[0]}>Remove strain</button>
+                        </div>
+                      )
                     })
                   }
               </div>
@@ -179,7 +200,6 @@ class App extends Component {
       method: 'GET',
       url: `https://strainapi.evanbusse.com/${apiKey}/strains/search/all`,
     }).then((res) => {
-      // console.log(res)
       res = Object.entries(res.data)
 
       const strainArray = res.map(strain => {
@@ -201,7 +221,6 @@ class App extends Component {
       method: 'GET',
       url: `https://strainapi.evanbusse.com/${apiKey}/searchdata/effects`,
     }).then((result) => {
-      // console.log(result.data);
 
       result = result.data;
 
@@ -209,7 +228,6 @@ class App extends Component {
         return effect.type === "positive";
       })
 
-      // console.log(positiveEffects);
       this.setState({
         positiveEffects: positiveEffects
       })
@@ -224,3 +242,5 @@ class App extends Component {
 }
 
 export default App;
+
+
