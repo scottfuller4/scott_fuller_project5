@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Effect from './Effect';
 import Strain from './Strain';
+// import SweetAlert from 'sweetalert-react';
 
 class App extends Component {
   constructor(){
@@ -33,8 +34,14 @@ class App extends Component {
 
     console.log(matchedStrains);
 
+    if (matchedStrains.length === 0){
+      console.log("no match");
+      alert("No strains match your search parameter. Update your selection and try again.")
+    }
+
     this.setState({
-      matchedStrains: matchedStrains
+      matchedStrains: matchedStrains,
+      // selectedEffects: []
     })
   }
 
@@ -98,6 +105,9 @@ class App extends Component {
             }
           </section>
         </main>
+        <footer>
+          <p>© 2018 Scott Fuller</p>
+        </footer>
       </div>
     );
   }
