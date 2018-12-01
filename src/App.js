@@ -108,7 +108,10 @@ class App extends Component {
       <div className="App">
         <header>
           <div className="wrapper">
-            <h1>Marijuana strain recommendation</h1>
+            <div className="headerContainer">  
+              <h1>Marijuana strain recommendation</h1>
+              <i class="fas fa-angle-double-down"></i>
+            </div>
           </div>
         </header>
         <main>
