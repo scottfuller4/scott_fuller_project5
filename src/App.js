@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Effect from './Effect';
-// import Strain from './Strain';
 import firebase from './firebase';
 import Strains from './Strains'
 // import SweetAlert from 'sweetalert-react';
@@ -122,8 +121,9 @@ class App extends Component {
               </div>
             </section>
             <section className="effectSelector">
-              <div className="wrapper">
+              <div className="wrapper contentContainer">
                 <form onSubmit={this.handleSubmit} action="">
+                  <h2>How do you want to feel?</h2>
                   <div className="formContainer">
                   {
                     this.state.positiveEffects.map(positiveEffect => {
@@ -137,41 +137,19 @@ class App extends Component {
                     })
                   }
                   </div>
-                  <input type="submit" value="Lets get high" onClick={this.onClick} />
+                  <input type="submit" value="Search for strains" onClick={this.onClick} />
                 </form>
               </div>
             </section>
 
-            {/* <section className={this.state.showSection ? 'matchedStrains' : 'hidden'}>
-              <div className="wrapper">
-                <h2>Matched strains</h2>
-                <div className="strainContainer">
-                  {
-                    this.state.matchedStrains.map(matchedStrain => {
-                        return(
-                          <Strain 
-                            key={matchedStrain.id}
-                            id={matchedStrain.id}
-                            name={matchedStrain.name}
-                            race={matchedStrain.race}
-                            effects={matchedStrain.positiveEffects}
-                            handleClick={this.handleClick}
-                            shuffleArray={this.shuffleArray}
-                          />
-                        )
-                    })
-                  }
-                </div>
-              </div>
-            </section> */}
-
-            {/* Refactored strains goes here */}
             <Strains 
                 matchedStrains={this.state.matchedStrains}
                 showSection={this.state.showSection}
                 handleClick={this.handleClick}
                 shuffleArray={this.shuffleArray}
               />
+
+          <section className={this.state.showSection ? 'photo' : 'hidden'}></section>
 
             <section className={this.state.showSection ? 'favStrains' : 'hidden'}>
               <div className="wrapper">

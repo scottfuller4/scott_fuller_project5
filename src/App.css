@@ -99,7 +99,11 @@ p {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 100px 0 50px 0;
+  
+}
+
+.contentContainer {
+  padding: 100px 0;
 }
 
 .effectContainer {
@@ -118,6 +122,7 @@ p {
   width: 100%;
   border: 3px solid black;
   color: black;
+  letter-spacing: 0.1rem;
 }
 
 .effectContainer label:hover {
@@ -141,7 +146,7 @@ input:focus + label {
 }
 
 input[type=submit] {
-  margin: 50px 20px 100px 20px;
+  margin: 50px 20px 0 20px;
   background: none;
   text-transform: uppercase;
   /* border: 3px solid#491a00; */
@@ -149,6 +154,7 @@ input[type=submit] {
   padding: 20px 0;
   transition: 0.2s all;
   width: calc(100% - 50px);
+  letter-spacing: 0.1rem;
 }
 
 input[type=submit]:hover {
@@ -162,6 +168,15 @@ input[type=submit]:focus {
   border-color: white;
 }
 
+
+/* photo styles */
+.photo {
+  height: 50vh;
+  background-image: url(./assets/smoking.jpg);
+  background-size: cover;
+  width: 100%;
+  background-position-y: 60%;
+}
 
 /* matched strains styles */
 .matchedStrains {
@@ -179,12 +194,10 @@ input[type=submit]:focus {
 }
 
 .strain {
-  /* background: green; */
-  /* color: white; */
   width: calc(33.33% - 40px);
   border: 3px solid #DAA520;
   margin: 20px;
-  padding: 20px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -271,4 +284,75 @@ footer p {
   50% {transform: translateY(10px);}
   75% {transform: translateY(-10px);}
   100% {transform: translateY(10px);}
+}
+
+/* Media Queries */
+@media (max-width: 1100px) {
+  .strain li {
+    width: 100%;
+  }
+}
+
+@media (max-width: 950px) {
+  .strain {
+    width: calc(50% - 40px);
+  }
+}
+
+@media (max-width: 775px) {
+  .effectContainer {
+    width: calc(50% - 40px);
+  }
+}
+
+@media (max-width: 600px) {
+  .wrapper{
+    width: 95%;
+  }
+
+  .description {
+    margin: 50px 20px;
+  }
+
+  .contentContainer {
+    padding: 50px 0;
+  }
+
+  input[type=submit] {
+    margin-top: 30px;
+  }
+
+  .strain {
+    width: 100%;
+  }
+
+  .matchedStrains {
+    margin: 50px 0;
+  }
+
+  .favStrains {
+    padding: 50px 0 20px 0;
+  }
+}
+
+@media (max-width: 450px) {
+  h2 {
+    margin: 0 20px 20px 20px;
+  }
+
+  .effectContainer {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  input[type=submit] {
+    width: 100%;
+    margin: 50px 0 0 0;
+  }
+
+  .photo {
+  height: 30vh;
+  width: 100%;
+  background-position-y: 60%;
+  }
 }
