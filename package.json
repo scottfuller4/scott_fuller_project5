@@ -8,6 +8,7 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1",
+    "shuffle-array": "^1.0.1",
     "sweetalert-react": "^0.4.11"
   },
   "scripts": {

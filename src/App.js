@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Effect from './Effect';
-import Strain from './Strain';
+// import Strain from './Strain';
 import firebase from './firebase';
+import Strains from './Strains'
 // import SweetAlert from 'sweetalert-react';
 
 const dbRef = firebase.database().ref();
@@ -89,17 +90,17 @@ class App extends Component {
     })
   }
 
-  deleteStrain = (e) => {
-    const firebaseKey = e.target.id;
-    const strainRef = firebase.database().ref(`${firebaseKey}`);
-    strainRef.remove();
-  }
-
   shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
+  }
+
+  deleteStrain = (e) => {
+    const firebaseKey = e.target.id;
+    const strainRef = firebase.database().ref(`${firebaseKey}`);
+    strainRef.remove();
   }
 
   render() {
@@ -138,7 +139,7 @@ class App extends Component {
               </div>
             </section>
 
-            <section className={this.state.showSection ? 'matchedStrains' : 'hidden'}>
+            {/* <section className={this.state.showSection ? 'matchedStrains' : 'hidden'}>
               <div className="wrapper">
                 <h2>Matched strains</h2>
                 <div className="strainContainer">
@@ -159,7 +160,15 @@ class App extends Component {
                   }
                 </div>
               </div>
-            </section>
+            </section> */}
+
+            {/* Refactored strains goes here */}
+            <Strains 
+                matchedStrains={this.state.matchedStrains}
+                showSection={this.state.showSection}
+                handleClick={this.handleClick}
+                shuffleArray={this.shuffleArray}
+              />
 
             <section className={this.state.showSection ? 'favStrains' : 'hidden'}>
               <div className="wrapper">
