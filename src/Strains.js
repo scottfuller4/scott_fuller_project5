@@ -8,27 +8,6 @@ class Strains extends Component {
         }
     }
 
-
-    // shuffleArray = (array) => {
-    //     for (let i = array.length - 1; i > 0; i--) {
-    //         const j = Math.floor(Math.random() * (i + 1));
-    //         [array[i], array[j]] = [array[j], array[i]];
-    //     }
-    // }
-
-    // if matchedStrains has more than 10 strains
-    //shuffle through the array and display 10 of them
-    //else, display them as regular
-    //stretch goal: display more than 10
-
-    // shuffleArray = (array) => {
-    //     for (let i = array.length - 1; i > 0; i--) {
-    //         const j = Math.floor(Math.random() * (i + 1));
-    //         [array[i], array[j]] = [array[j], array[i]];
-    //     }
-    // }
-    // const cut = this.props.matchedStrains.slice(0, 10)
-
     render(){
         var shuffle = require('shuffle-array');
         shuffle(this.props.matchedStrains);
@@ -43,8 +22,8 @@ class Strains extends Component {
                                 return (
                                     <div className="strain" key={matchedStrain.id}>             
                                         <h3>{matchedStrain.name}</h3>            
-                                        <p>Race: {matchedStrain.race}</p>            
-                                        <ul>                
+                                        <p>Positive Effects:</p>
+                                        <ul>               
                                             {
                                                 matchedStrain.positiveEffects.map((effect) => {
                                                     return (
@@ -52,8 +31,9 @@ class Strains extends Component {
                                                     )
                                                 })
                                             }
-                                         </ul>
-                                        <button onClick={() => { this.props.handleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}>Add to favourites</button>
+                                        </ul>
+                                        <p>Race: {matchedStrain.race}</p> 
+                                        <button onClick={() => { this.props.handleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}><i class="far fa-heart"></i></button>
                                     </div>
                                 )
                             })

@@ -173,26 +173,29 @@ class App extends Component {
             <section className={this.state.showSection ? 'favStrains' : 'hidden'}>
               <div className="wrapper">
                   <h2>Favourite strains</h2>
-                  {
-                    Object.entries(this.state.strainList).map((strain) => {
-                      return (
-                        <div className="strain" key={strain[0]}>
-                          <h3>{strain[1].name}</h3>
-                          <p>Race: {strain[1].race}</p>
-                          <ul>
-                            {
-                              strain[1].effects.map((effect) => {
-                                return(
-                                  <li key={effect}>{effect}</li>
-                                )
-                              })
-                            }
-                          </ul>
-                          <button onClick={this.deleteStrain} id={strain[0]}>Remove strain</button>
-                        </div>
-                      )
-                    })
-                  }
+                  <div className="strainContainer favStrainsContainer">
+                    {
+                      Object.entries(this.state.strainList).map((strain) => {
+                        return (
+                          <div className="strain" key={strain[0]}>
+                            <h3>{strain[1].name}</h3>
+                            <p>Positive Effects:</p>
+                            <ul>
+                              {
+                                strain[1].effects.map((effect) => {
+                                  return(
+                                    <li key={effect}>{effect}</li>
+                                  )
+                                })
+                              }
+                            </ul>
+                            <p>Race: {strain[1].race}</p>
+                            <button onClick={this.deleteStrain} id={strain[0]}><i class="fas fa-times"></i></button>
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
               </div>
             </section>
         </main>

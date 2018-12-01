@@ -46,17 +46,32 @@ h1 {
 }
 
 h2 {
-  margin: 0;
+  margin: 0 0 20px 0;
+  font-size: 3rem;
+}
+
+h3 {
+  margin: 0 0 10px 0;
 }
 
 ul {
   padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+p {
+  margin: 0;
 }
 
 /* About styles */
 .description {
   margin: 100px 0;
   text-align: left;
+}
+
+.description p {
+  line-height: 1.8;
 }
 
 
@@ -117,6 +132,9 @@ input[type=submit]:hover {
 
 
 /* matched strains styles */
+.matchedStrains {
+  margin: 100px 0;
+}
 
 .matchedStrains {
   background: white;
@@ -125,24 +143,81 @@ input[type=submit]:hover {
 .strainContainer {
   display: flex;
   flex-wrap: wrap;
-  margin: 100px auto 50px auto;
+  /* margin: 0 auto; */
 }
 
 .strain {
   /* background: green; */
   /* color: white; */
-  width: calc(50% - 40px);
-  border: 2px solid #DAA520;
+  width: calc(33.33% - 40px);
+  border: 3px solid #DAA520;
   margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+  position: relative;
 }
 
+.strain ul {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 100%; */
+  align-items: center;
+}
 
+.strain li {
+  border: 1px solid #DAA520;
+  margin: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  width: calc(50% - 10px);
+}
+
+.strain button {
+  border: none;
+  background: none;
+  padding: 5px 10px;
+  /* margin-top: 20px; */
+  font-size: 3rem;
+  text-transform: uppercase;
+  color: #DAA520;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: all 0.2s;
+}
+
+.strain button:hover {
+  color: #a83f39;
+}
+
+/* Favourite strains styles */
+.favStrains {
+  background: #DAA520;
+  color: white;
+  padding: 100px 0 70px 0;
+}
+
+.favStrains .strain {
+  border: 3px solid white;
+}
+
+.favStrains li {
+  border: 1px solid white;
+}
+
+.favStrains button {
+  color: white;
+}
 
 /* Footer styles */
 
 footer {
-  background: #DAA520;
   color: white;
+  background: #DAA520;
 }
 
 footer p {
