@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
-import Effect from './Effect';
 import firebase from './firebase';
-import Strains from './Strains'
-// import SweetAlert from 'sweetalert-react';
+import Header from './Header';
+import About from './About';
+import Effects from './Effects';
+import Strains from './Strains';
+import Photo from './Photo';
+import Favs from './Favs';
+import Footer from './Footer';
+// import SweetAlert from 'react-bootstrap-sweetalert';
+
 
 const dbRef = firebase.database().ref();
+var scrollToElement = require('scroll-to-element');
+// const SweetAlert = require('react-bootstrap-sweetalert');
 
 class App extends Component {
   constructor(){
@@ -17,7 +25,7 @@ class App extends Component {
       selectedEffects: [],
       matchedStrains: [],
       strainList: {},
-      showSection: false
+      showSection: false,
     }
   }
 
@@ -25,7 +33,6 @@ class App extends Component {
   //stop the default form behaviour
   //using the includes() Array method, compare the stored values with the this.state.strains array
   //print the matched strains to the page
-  //clear the values of the form
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -45,6 +52,10 @@ class App extends Component {
       matchedStrains: matchedStrains,
       // selectedEffects: []
     })
+
+    scrollToElement('.matchedStrains', {
+      offset: -99
+    });
   }
 
   //store the values of the checked variables into an array
@@ -105,87 +116,31 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          <div className="wrapper">
-            <div className="headerContainer">
-              <div className="headerTitle">
-                <h2>Strain search</h2>
-                <h1>Cannabis strain search engine</h1>
-              </div>
-              <i class="fas fa-angle-double-down"></i>
-            </div>
-          </div>
-        </header>
+        <Header />
         <main>
-            <section className="description">
-              <div className="wrapper">
-                <h2>About</h2>
-                <p>New to consuming cannabis? Overwhelmed by the number of different strains available? Use this tool to learn more about different types of cannabis and discover new strains that match how you want to feel. Just select your desired effects below and search for matched strains. Keep track of your favourites by clicking the heart icon on the search results, which will add the strain to your Favourites List at the bottom of the page.</p>
-              </div>
-            </section>
-            <section className="effectSelector">
-              <div className="wrapper contentContainer">
-                <form onSubmit={this.handleSubmit} action="">
-                  <h2>How do you want to feel?</h2>
-                  <div className="formContainer">
-                  {
-                    this.state.positiveEffects.map(positiveEffect => {
-                      return(
-                        <Effect 
-                          key={positiveEffect.effect}
-                          effectName={positiveEffect.effect}
-                          handleChange={this.handleChange} 
-                        />
-                      )
-                    })
-                  }
-                  </div>
-                  <input type="submit" value="Search for strains" onClick={this.onClick} />
-                </form>
-              </div>
-            </section>
-
+            <About />
+            <Effects 
+              handleSubmit={this.handleSubmit}
+              positiveEffects = {this.state.positiveEffects}
+              handleChange={this.handleChange}
+              onClick={this.onClick}
+            />
             <Strains 
                 matchedStrains={this.state.matchedStrains}
                 showSection={this.state.showSection}
                 handleClick={this.handleClick}
                 shuffleArray={this.shuffleArray}
               />
-
-          <section className={this.state.showSection ? 'photo' : 'hidden'}></section>
-
-            <section className={this.state.showSection ? 'favStrains' : 'hidden'}>
-              <div className="wrapper">
-                  <h2>Favourite strains</h2>
-                  <div className="strainContainer favStrainsContainer">
-                    {
-                      Object.entries(this.state.strainList).map((strain) => {
-                        return (
-                          <div className="strain" key={strain[0]}>
-                            <h3>{strain[1].name}</h3>
-                            <p>Positive Effects:</p>
-                            <ul>
-                              {
-                                strain[1].effects.map((effect) => {
-                                  return(
-                                    <li key={effect}>{effect}</li>
-                                  )
-                                })
-                              }
-                            </ul>
-                            <p>Race: {strain[1].race}</p>
-                            <button onClick={this.deleteStrain} id={strain[0]}><i class="fas fa-times"></i></button>
-                          </div>
-                        )
-                      })
-                    }
-                  </div>
-              </div>
-            </section>
+            <Photo 
+              showSection={this.state.showSection}
+            />
+            <Favs 
+              showSection={this.state.showSection}
+              strainList={this.state.strainList}
+              deleteStrain={this.deleteStrain}
+            />
         </main>
-        <footer>
-          <p>© 2018 Scott Fuller</p>
-        </footer>
+        <Footer />
       </div>
     );
   }
