@@ -47,7 +47,7 @@ header i {
   font-size: 4rem;
   position: absolute;
   bottom: 40px;
-  left: calc(50% - 20px);
+  left: calc(50% - 10px);
   animation: bounce 3s infinite;
   color: #DAA520;
 }

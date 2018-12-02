@@ -9,12 +9,11 @@ import Strains from './Strains';
 import Photo from './Photo';
 import Favs from './Favs';
 import Footer from './Footer';
-// import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 const dbRef = firebase.database().ref();
 var scrollToElement = require('scroll-to-element');
-// const SweetAlert = require('react-bootstrap-sweetalert');
+// var SweetAlert = require('react-bootstrap-sweetalert');
 
 class App extends Component {
   constructor(){
@@ -45,8 +44,13 @@ class App extends Component {
     })
 
     if (matchedStrains.length === 0){
-      alert("No strains match your search parameter. Update your selection and try again.")
+      alert("No strains match your search. Update your selection and try again.");
+      return;
+      // SweetAlert('success');
     }
+
+    var shuffle = require('shuffle-array');
+    shuffle(matchedStrains);
 
     this.setState({
       matchedStrains: matchedStrains,
@@ -54,7 +58,8 @@ class App extends Component {
     })
 
     scrollToElement('.matchedStrains', {
-      offset: -99
+      offset: -99,
+      duration: 700
     });
   }
 
@@ -88,6 +93,11 @@ class App extends Component {
       effects: positiveEffects
     }
     dbRef.push(favStrain);
+
+    scrollToElement('.favStrains', {
+      duration: 1200
+    });
+
   }
   
   onClick = () => {
@@ -98,13 +108,7 @@ class App extends Component {
     this.setState({
       showSection: show
     })
-  }
 
-  shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
   }
 
   deleteStrain = (e) => {

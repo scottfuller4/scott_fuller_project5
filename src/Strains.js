@@ -9,9 +9,6 @@ class Strains extends Component {
     }
 
     render(){
-        var shuffle = require('shuffle-array');
-        shuffle(this.props.matchedStrains);
-
         return (
             <section className={this.props.showSection ? 'matchedStrains' : 'hidden'}>
                 <div className="wrapper">
