@@ -107,8 +107,11 @@ class App extends Component {
       <div className="App">
         <header>
           <div className="wrapper">
-            <div className="headerContainer">  
-              <h1>Marijuana strain recommendation</h1>
+            <div className="headerContainer">
+              <div className="headerTitle">
+                <h2>Strain search</h2>
+                <h1>Cannabis strain search engine</h1>
+              </div>
               <i class="fas fa-angle-double-down"></i>
             </div>
           </div>
@@ -117,7 +120,7 @@ class App extends Component {
             <section className="description">
               <div className="wrapper">
                 <h2>About</h2>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum dolorum numquam autem. Reiciendis quod, sequi numquam quibusdam rerum tenetur alias quas nulla, quidem illo incidunt voluptates voluptatibus nostrum soluta maiores laborum ut dolore consequatur molestiae magnam. Eveniet sit, rerum odio assumenda facilis harum fuga earum molestias voluptates maxime consectetur ea ratione doloribus provident nostrum tempore quam aut voluptas cumque deserunt adipisci illo illum. Eveniet, minima facilis? Placeat non expedita voluptatibus obcaecati maiores. Ducimus illum consequuntur repellendus voluptates eos. Inventore culpa dignissimos quae sed atque est suscipit deserunt iure dolores sapiente sint unde reiciendis, dicta impedit, dolorem porro architecto! Id, animi?</p>
+                <p>New to consuming cannabis? Overwhelmed by the number of different strains available? Use this tool to learn more about different types of cannabis and discover new strains that match how you want to feel. Just select your desired effects below and search for matched strains. Keep track of your favourites by clicking the heart icon on the search results, which will add the strain to your Favourites List at the bottom of the page.</p>
               </div>
             </section>
             <section className="effectSelector">
