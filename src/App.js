@@ -12,7 +12,7 @@ import Footer from './Footer';
 
 
 const dbRef = firebase.database().ref();
-var scrollToElement = require('scroll-to-element');
+const scrollToElement = require('scroll-to-element');
 // var SweetAlert = require('react-bootstrap-sweetalert');
 
 class App extends Component {
@@ -25,6 +25,7 @@ class App extends Component {
       matchedStrains: [],
       strainList: {},
       showSection: false,
+      hideAlert: true
     }
   }
 
@@ -46,6 +47,7 @@ class App extends Component {
     if (matchedStrains.length === 0){
       alert("No strains match your search. Update your selection and try again.");
       return;
+      // <SweetAlert title="Here's a message!" onConfirm={this.hideAlert} />
       // SweetAlert('success');
     }
 
@@ -75,7 +77,6 @@ class App extends Component {
       const indexOfUnselect = userSelectedEffects.indexOf(e.target.value);
       userSelectedEffects.splice(indexOfUnselect, 1);
     }
-  
 
     this.setState({
       selectedEffects: userSelectedEffects
