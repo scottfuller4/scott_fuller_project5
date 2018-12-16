@@ -11,14 +11,18 @@ import Favs from './Favs';
 import Footer from './Footer';
 
 
-const dbRef = firebase.database().ref();
+// const dbRef = firebase.database().ref();
 const scrollToElement = require('scroll-to-element');
 // var SweetAlert = require('react-bootstrap-sweetalert');
 
+const provider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth();
+
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
+      user: null,
       strains: [],
       positiveEffects: [],
       selectedEffects: [],
@@ -44,7 +48,7 @@ class App extends Component {
       })
     })
 
-    if (matchedStrains.length === 0){
+    if (matchedStrains.length === 0) {
       alert("No strains match your search. Update your selection and try again.");
       return;
       // <SweetAlert title="Here's a message!" onConfirm={this.hideAlert} />
@@ -73,7 +77,7 @@ class App extends Component {
 
     if (e.target.checked) {
       userSelectedEffects.push(e.target.value);
-    }  else if (e.target) {
+    } else if (e.target) {
       const indexOfUnselect = userSelectedEffects.indexOf(e.target.value);
       userSelectedEffects.splice(indexOfUnselect, 1);
     }
@@ -85,7 +89,7 @@ class App extends Component {
 
 
 
-// Pushing strains to firebase
+  // Pushing strains to firebase
   handleClick = (id, name, race, positiveEffects) => {
     const favStrain = {
       id: id,
@@ -93,6 +97,9 @@ class App extends Component {
       race: race,
       effects: positiveEffects
     }
+
+    const dbRef = firebase.database().ref(`/${this.state.user.uid}`);
+
     dbRef.push(favStrain);
 
     scrollToElement('.favStrains', {
@@ -100,7 +107,7 @@ class App extends Component {
     });
 
   }
-  
+
   onClick = () => {
     let show = this.state.showSection;
 
@@ -114,43 +121,68 @@ class App extends Component {
 
   deleteStrain = (e) => {
     const firebaseKey = e.target.id;
-    const strainRef = firebase.database().ref(`${firebaseKey}`);
+    const strainRef = firebase.database().ref(`/${this.state.user.uid}/${firebaseKey}`);
     strainRef.remove();
   }
+
+  logIn = () => {
+    console.log("clicked!")
+    auth.signInWithPopup(provider)
+      .then((result) => {
+        const user = result.user;
+        this.setState({
+          user
+        });
+      });
+  }
+
+  logOut = () => {
+    auth.signOut()
+      .then(() => {
+        this.setState({
+          user: null
+        });
+      });
+  }
+
 
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header
+          user={this.state.user}
+          logIn={this.logIn}
+          lougOut={this.logOut}
+        />
         <main>
-            <About />
-            <Effects 
-              handleSubmit={this.handleSubmit}
-              positiveEffects = {this.state.positiveEffects}
-              handleChange={this.handleChange}
-              onClick={this.onClick}
-            />
-            <Strains 
-                matchedStrains={this.state.matchedStrains}
-                showSection={this.state.showSection}
-                handleClick={this.handleClick}
-                shuffleArray={this.shuffleArray}
-              />
-            <Photo 
-              showSection={this.state.showSection}
-            />
-            <Favs 
-              showSection={this.state.showSection}
-              strainList={this.state.strainList}
-              deleteStrain={this.deleteStrain}
-            />
+          <About />
+          <Effects
+            handleSubmit={this.handleSubmit}
+            positiveEffects={this.state.positiveEffects}
+            handleChange={this.handleChange}
+            onClick={this.onClick}
+          />
+          <Strains
+            matchedStrains={this.state.matchedStrains}
+            showSection={this.state.showSection}
+            handleClick={this.handleClick}
+            shuffleArray={this.shuffleArray}
+          />
+          <Photo
+            showSection={this.state.showSection}
+          />
+          <Favs
+            showSection={this.state.showSection}
+            strainList={this.state.strainList}
+            deleteStrain={this.deleteStrain}
+          />
         </main>
         <Footer />
       </div>
     );
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const apiKey = 'XIsOTBG'
     axios({
       method: 'GET',
@@ -189,11 +221,29 @@ class App extends Component {
       })
     })
 
-    dbRef.on('value', (snapshot) => {
-      this.setState({
-        strainList: snapshot.val()
-      });
-    });
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          user: user
+        }, () => {
+          // create reference specific to user
+          this.dbRef = firebase.database().ref(`/${this.state.user.uid}`);
+
+          // attaching our event listener to firebase
+          this.dbRef.on('value', (snapshot) => {
+            this.setState({
+              strainList: snapshot.val() || {}
+            });
+          });
+        });
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    if (this.dbRef) {
+      this.dbRef.off();
+    }
   }
 }
 
