@@ -108,6 +108,25 @@ class App extends Component {
 
   }
 
+  guestHandleClick = (id, name, race, positiveEffects) => {
+    console.log("clicked");
+    const favStrain = {
+      id: id,
+      name: name,
+      race: race,
+      effects: positiveEffects
+    }
+
+    const dbRef = firebase.database().ref();
+
+    dbRef.push(favStrain);
+
+    scrollToElement('.favStrains', {
+      duration: 1200
+    });
+
+  }
+
   onClick = () => {
     let show = this.state.showSection;
 
@@ -126,7 +145,6 @@ class App extends Component {
   }
 
   logIn = () => {
-    console.log("clicked!")
     auth.signInWithPopup(provider)
       .then((result) => {
         const user = result.user;
@@ -137,6 +155,7 @@ class App extends Component {
   }
 
   logOut = () => {
+    console.log("get outta here");
     auth.signOut()
       .then(() => {
         this.setState({
@@ -152,7 +171,7 @@ class App extends Component {
         <Header
           user={this.state.user}
           logIn={this.logIn}
-          lougOut={this.logOut}
+          logOut={this.logOut}
         />
         <main>
           <About />
@@ -167,6 +186,8 @@ class App extends Component {
             showSection={this.state.showSection}
             handleClick={this.handleClick}
             shuffleArray={this.shuffleArray}
+            user={this.state.user}
+            guestHandleClick={this.guestHandleClick}
           />
           <Photo
             showSection={this.state.showSection}

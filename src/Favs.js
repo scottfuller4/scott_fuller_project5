@@ -11,7 +11,7 @@ class Favs extends Component {
     render() {
         return (
             <section className={this.props.showSection ? 'favStrains' : 'hidden'}>
-                {this.props.strainList ?
+                {Object.keys(this.props.strainList).length !== 0 ?
                     <div className="wrapper">
                         <h2>Favourite strains</h2>
                         <div className="strainContainer favStrainsContainer">
@@ -38,7 +38,7 @@ class Favs extends Component {
                             }
                         </div>
                     </div> :
-                    <div classname="wrapper">
+                    <div className="wrapper">
                         <h2>Favourite strains</h2>
                         <h3>You haven't added any favourite strains yet.</h3>
                     </div>

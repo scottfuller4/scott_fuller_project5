@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 
 class Strains extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            
+
         }
     }
 
-    render(){
+    render() {
         return (
             <section className={this.props.showSection ? 'matchedStrains' : 'hidden'}>
                 <div className="wrapper">
                     <h2>Matched strains</h2>
                     <div className="strainContainer">
                         {
-                            this.props.matchedStrains.slice(0,12).map(matchedStrain => {
+                            this.props.matchedStrains.slice(0, 12).map(matchedStrain => {
                                 return (
-                                    <div className="strain" key={matchedStrain.id}>             
-                                        <h3>{matchedStrain.name}</h3>            
+                                    <div className="strain" key={matchedStrain.id}>
+                                        <h3>{matchedStrain.name}</h3>
                                         <p>Positive Effects:</p>
-                                        <ul>               
+                                        <ul>
                                             {
                                                 matchedStrain.positiveEffects.map((effect) => {
                                                     return (
@@ -29,8 +29,13 @@ class Strains extends Component {
                                                 })
                                             }
                                         </ul>
-                                        <p>Race: {matchedStrain.race}</p> 
-                                        <button onClick={() => { this.props.handleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}><i class="far fa-heart"></i></button>
+                                        <p>Race: {matchedStrain.race}</p>
+                                        {this.props.user ?
+                                            <button onClick={() => { this.props.handleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}><i className="far fa-heart"></i></button>
+                                            :
+                                            <button onClick={() => { this.props.guestHandleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}>O</button>
+                                        }
+
                                     </div>
                                 )
                             })
