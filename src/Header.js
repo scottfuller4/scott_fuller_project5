@@ -6,7 +6,8 @@ const Header = (props) => {
             <div className="wrapper">
                 <div className="headerContainer">
                     <div className="loginContainer">
-                        {props.user ? <h3>Welcome {props.user.displayName}</h3> : <h3>Welcome Guest</h3>}
+                        {props.user ? <h3>Welcome {props.user.displayName}</h3> : <button onClick={props.guestLogin}>Use as Guest</button>}
+                        {/* {props.user.displayName ? <h3>Welcome {props.user.displayName}</h3> : <h3>Welcome Guest</h3>} */}
                         {props.user ? <button onClick={props.logOut}>Log Out</button> : <button onClick={props.logIn}>Login</button>}
                     </div>
                     <div className="headerTitle">

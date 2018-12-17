@@ -108,8 +108,11 @@ class App extends Component {
 
   }
 
+  guestLogin = () => {
+    firebase.auth().signInAnonymously();
+  }
+
   guestHandleClick = (id, name, race, positiveEffects) => {
-    console.log("clicked");
     const favStrain = {
       id: id,
       name: name,
@@ -159,7 +162,8 @@ class App extends Component {
     auth.signOut()
       .then(() => {
         this.setState({
-          user: null
+          user: null,
+          strainList: {}
         });
       });
   }
@@ -172,6 +176,7 @@ class App extends Component {
           user={this.state.user}
           logIn={this.logIn}
           logOut={this.logOut}
+          guestLogin={this.guestLogin}
         />
         <main>
           <About />
@@ -196,6 +201,7 @@ class App extends Component {
             showSection={this.state.showSection}
             strainList={this.state.strainList}
             deleteStrain={this.deleteStrain}
+            user={this.state.user}
           />
         </main>
         <Footer />
@@ -258,6 +264,15 @@ class App extends Component {
           });
         });
       }
+      // } else {
+      //   firebase.auth().signInAnonymously();
+      //   this.setState({
+      //     user: {}
+      //   })
+      // }
+
+
+
     })
   }
 

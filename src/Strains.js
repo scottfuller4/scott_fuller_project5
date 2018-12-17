@@ -33,7 +33,8 @@ class Strains extends Component {
                                         {this.props.user ?
                                             <button onClick={() => { this.props.handleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}><i className="far fa-heart"></i></button>
                                             :
-                                            <button onClick={() => { this.props.guestHandleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}>O</button>
+                                            null
+                                            // <button onClick={() => { this.props.guestHandleClick(matchedStrain.id, matchedStrain.name, matchedStrain.race, matchedStrain.positiveEffects) }}><i className="far fa-heart"></i></button>
                                         }
 
                                     </div>

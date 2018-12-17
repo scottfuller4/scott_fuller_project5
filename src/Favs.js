@@ -10,7 +10,7 @@ class Favs extends Component {
 
     render() {
         return (
-            <section className={this.props.showSection ? 'favStrains' : 'hidden'}>
+            <section className="favStrains">
                 {Object.keys(this.props.strainList).length !== 0 ?
                     <div className="wrapper">
                         <h2>Favourite strains</h2>
@@ -31,7 +31,7 @@ class Favs extends Component {
                                                 }
                                             </ul>
                                             <p>Race: {strain[1].race}</p>
-                                            <button onClick={this.props.deleteStrain} id={strain[0]}><i class="fas fa-times"></i></button>
+                                            <button onClick={this.props.deleteStrain} id={strain[0]}><i className="fas fa-times"></i></button>
                                         </div>
                                     )
                                 })
@@ -40,7 +40,7 @@ class Favs extends Component {
                     </div> :
                     <div className="wrapper">
                         <h2>Favourite strains</h2>
-                        <h3>You haven't added any favourite strains yet.</h3>
+                        {this.props.user ? <h3>You haven't added any favourite strains yet.</h3> : <h3>Sign in to save your favourite strains</h3>}
                     </div>
                 }
             </section>
