@@ -9,6 +9,7 @@ import Strains from './Strains';
 import Photo from './Photo';
 import Favs from './Favs';
 import Footer from './Footer';
+import swal from 'sweetalert';
 
 
 // const dbRef = firebase.database().ref();
@@ -49,7 +50,7 @@ class App extends Component {
     })
 
     if (matchedStrains.length === 0) {
-      alert("No strains match your search. Update your selection and try again.");
+      swal({ text: "No strains match your search. Update your selection and try again.", icon: "error" });
       return;
       // <SweetAlert title="Here's a message!" onConfirm={this.hideAlert} />
       // SweetAlert('success');
